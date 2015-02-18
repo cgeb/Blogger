@@ -1,4 +1,5 @@
 class TagsController < ApplicationController
+  include ArticlesHelper
   
   def index
     @tags = Tag.all
@@ -13,7 +14,7 @@ class TagsController < ApplicationController
   end
 
   def create
-  	@tag = Tag.new(tag_params)
+  	@tag = Tag.new(article_params)
   	@tag.save
   	flash.notice = "Tag '#{@tag.name}' Created!"
   	redirect_to tag_path(@tag)
@@ -24,12 +25,6 @@ class TagsController < ApplicationController
   	@tag.destroy
   	flash.notice = "Tag '#{@tag.name}' Deleted!"
   	redirect_to tags_path
-  end
-
-  private
-
-  def tag_params
-  	params.require(:tag).permit(:name)
   end
 
 end
